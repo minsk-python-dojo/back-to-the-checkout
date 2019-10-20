@@ -2,7 +2,7 @@ from string import ascii_uppercase
 from random import choice
 import pytest
 
-from checkout import parse_check,parse_product_table
+from checkout import parse_check, parse_product_table, calculate_price
 
 
 def test_parse_str_one_item_returns_dict_with_one_key():
@@ -32,4 +32,14 @@ def test_parse_product_table_raises_value_error_when_empty_string_is_passed():
     input_string = ''
     with pytest.raises(ValueError):
         parse_product_table(input_string)
-        
+
+def test_calculate_price_return_correct_sum_with_non_empty_products_table():
+    input_check = {'A': 1, 'B': 1, 'C': 1}
+    input_product_table = {
+        'A': [50, '2+1'], 
+        'B': [100, '2for170'], 
+        'C': [18, None]
+    }
+    result = calculate_price(input_product_table, input_check)
+    expected = 168
+    assert result == expected

@@ -2,9 +2,7 @@
 
 
 def parse_check(check: str) -> dict:
-    parsed_check = {}
-    for char in check:
-        parsed_check[char] = check.count(char)
+    parsed_check = {char: check.count(char) for char in set(check)}
     return parsed_check
 
 def parse_product_table(products_data: str) -> dict:
@@ -21,3 +19,7 @@ def parse_product_table(products_data: str) -> dict:
 
         products[name] = [price, rule]
     return products
+
+def calculate_price(product_table: dict, products: dict) -> float:
+    check_sum = 0.0 
+    return check_sum 
