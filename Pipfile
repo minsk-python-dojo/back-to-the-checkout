@@ -7,5 +7,6 @@ verify_ssl = true
 pytest = "*"
 pylint = "*"
 mypy = "*"
+radon = "*"
 
 [packages]

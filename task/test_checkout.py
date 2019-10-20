@@ -1,7 +1,8 @@
 from string import ascii_uppercase
 from random import choice
+import pytest
 
-from checkout import parse_check
+from checkout import parse_check,parse_product_table
 
 
 def test_parse_str_one_item_returns_dict_with_one_key():
@@ -13,3 +14,22 @@ def test_parse_str_two_same_items_returns_dict_with_one_key():
     our_check = choice(ascii_uppercase) * 2
     our_dict = parse_check(our_check)
     assert (our_dict == {our_check[0]: 2})
+
+def test_parse_product_table_returns_dict_of_products_when_non_empty_string_is_passed():
+    input_string = (
+        'A;50;2+1\n'
+        'B;100;2for170\n'
+        'C;18; '
+        )
+    our_dict = parse_product_table(input_string)
+    expected = {'A': [50, '2+1'],
+                'B': [100, '2for170'],
+                'C': [18, None]
+                }
+    assert (our_dict == expected)
+
+def test_parse_product_table_raises_value_error_when_empty_string_is_passed():
+    input_string = ''
+    with pytest.raises(ValueError):
+        parse_product_table(input_string)
+        
