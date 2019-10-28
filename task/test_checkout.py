@@ -2,7 +2,7 @@ from string import ascii_uppercase
 from random import choice
 import pytest
 
-from checkout import parse_check, parse_product_table, calculate_price
+from checkout import parse_check, parse_product_table, calculate_price, parse_price_rule
 
 
 def test_parse_str_one_item_returns_dict_with_one_key():
@@ -43,3 +43,17 @@ def test_calculate_price_return_correct_sum_with_non_empty_products_table():
     result = calculate_price(input_product_table, input_check)
     expected = 168
     assert result == expected
+
+def test_parse_price_rule_return_plus_function_when_string_plus_rule():
+    input_rule = '2+1'
+    expected = 100
+    parsed_rule_function = parse_price_rule(input_rule)
+    parsed_rule_function_result = parsed_rule_function(3, 50)
+    assert parsed_rule_function_result == expected
+
+def test_parse_price_rule_return_for_function_when_string_for_rule():
+    input_rule = '2for170'
+    expected = 170
+    parsed_rule_function = parse_price_rule(input_rule)
+    parsed_rule_function_result = parsed_rule_function(2, 100)
+    assert parsed_rule_function_result == expected
