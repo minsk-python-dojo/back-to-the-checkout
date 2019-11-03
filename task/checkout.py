@@ -21,13 +21,9 @@ def parse_product_table(products_data: str) -> dict:
         products[name] = [price, rule]
     return products
 
-def calculate_price(product_table: dict, products: dict) -> float:
-    check_sum = 0.0 
-    return check_sum 
-
 def parse_price_rule(input_rule: str) -> Callable:
-    if not input_rule.strip():
-        return lambda count, price: count * price
+    if (not input_rule) or (not input_rule.strip()):
+        return lambda count, price: count * price    
     
     splited_rule = input_rule.split('for')
     if len(splited_rule) == 2:
@@ -45,4 +41,20 @@ def parse_price_rule(input_rule: str) -> Callable:
         parsed_function = lambda count, price: \
                     count * price - (count // (left_operand + right_operand)) \
                     * right_operand * price
-    return parsed_function 
+    return parsed_function
+
+
+def calculate_price(product_table: dict, products: dict) -> float:
+    check_sum = 0.0 
+    for product in products:
+        count = products[product]
+        price = product_table[product][0]
+        rule_str = product_table[product][1]
+        rule_func = parse_price_rule(rule_str)
+        
+        position_price = rule_func(count, price)
+
+
+        check_sum += position_price
+
+    return check_sum 

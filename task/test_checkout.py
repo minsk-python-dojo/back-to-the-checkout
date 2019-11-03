@@ -44,6 +44,18 @@ def test_calculate_price_return_correct_sum_with_non_empty_products_table():
     expected = 168
     assert result == expected
 
+
+def test_calculate_price_return_correct_sum_with_check_with_multiple_products():
+    input_check = {'A': 4, 'B': 3, 'C': 4}
+    input_product_table = {
+        'A': [50, '2+1'], 
+        'B': [100, '2for170'], 
+        'C': [18, None]
+    }
+    result = calculate_price(input_product_table, input_check)
+    expected = 150 + 270 + 18 * 4
+    assert result == expected
+
 def test_parse_price_rule_return_plus_function_when_string_plus_rule():
     input_rule = '2+1'
     expected = 100
