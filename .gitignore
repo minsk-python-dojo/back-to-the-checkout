@@ -106,3 +106,7 @@ venv.bak/
 # IDE etc.
 .vscode/
 .idea/
+
+# input files
+product_rules.txt
+products_check.txt
